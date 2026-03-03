@@ -599,11 +599,11 @@ const slides = [
     {/* OLD WAY COLUMN */}
     <div className="space-y-4">
       <div className="text-red-500 font-black text-[10px] uppercase tracking-[0.3em] text-center italic">The Old Way (Manual) [cite: 11, 33]</div>
-      <div className="rounded-[32px] bg-black/40 aspect-video relative group transition-all">
+      <div className="rounded-[32px] bg-black/40 relative group transition-all overflow-hidden">
         <img 
           src="/images/oldway.jpg" 
           alt="Old Way Inbox Chaos" 
-          className="w-full h-full object-cover rounded-[32px] border-2 border-red-500/20 grayscale opacity-60 
+          className="w-full h-auto object-contain rounded-[32px] border-2 border-red-500/20 grayscale opacity-60 
                      group-hover:grayscale-0 group-hover:opacity-100 
                      group-hover:scale-125 group-hover:z-[9999] group-hover:relative
                      transition-all duration-500 ease-in-out cursor-zoom-in shadow-2xl"
@@ -617,11 +617,11 @@ const slides = [
     {/* NEXOPS WAY COLUMN */}
     <div className="space-y-4">
       <div className="text-blue-400 font-black text-[10px] uppercase tracking-[0.3em] text-center italic">The NexOps Way (AI) [cite: 12, 34]</div>
-      <div className="rounded-[32px] bg-blue-900/10 aspect-video relative group transition-all">
+      <div className="rounded-[32px] bg-blue-900/10 relative group transition-all overflow-hidden">
         <img 
           src="/images/newway.jpg" 
           alt="NexOps Organized AI" 
-          className="w-full h-full object-cover rounded-[32px] border-2 border-blue-500/40 
+          className="w-full h-auto object-contain rounded-[32px] border-2 border-blue-500/40 
                      group-hover:scale-125 group-hover:z-[9999] group-hover:relative
                      group-hover:shadow-[0_20px_50px_rgba(59,130,246,0.6)] 
                      transition-all duration-500 ease-in-out cursor-zoom-in"
