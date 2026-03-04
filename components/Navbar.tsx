@@ -3,7 +3,12 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 
-const NAV_LINKS = ['About', 'Team', 'Solutions']
+const NAV_LINKS = [
+  { label: 'About',    href: '#about'     },
+  { label: 'Team',     href: '#team'      },
+  { label: 'AI Audit', href: '#audit',    highlight: true },
+  { label: 'Solutions', href: '#solutions' },
+]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -54,12 +59,16 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((item) => (
               <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="animated-underline text-sm font-medium text-slate-600 hover:text-blue-500 transition-colors duration-200"
+                key={item.label}
+                href={item.href}
+                className={`animated-underline text-sm font-medium transition-colors duration-200 ${
+                  item.highlight
+                    ? 'text-blue-600 font-semibold hover:text-blue-500'
+                    : 'text-slate-600 hover:text-blue-500'
+                }`}
                 style={{ fontFamily: 'var(--font-body)' }}
               >
-                {item}
+                {item.highlight && <span className="mr-1">✦</span>}{item.label}
               </a>
             ))}
           </div>
@@ -112,14 +121,18 @@ export default function Navbar() {
             <div className="px-4 py-4 flex flex-col gap-1">
               {NAV_LINKS.map((item) => (
                 <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
+                  key={item.label}
+                  href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2 px-3 py-3 rounded-xl text-slate-700 font-medium text-sm hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                  className={`flex items-center gap-2 px-3 py-3 rounded-xl font-medium text-sm transition-colors ${
+                    item.highlight
+                      ? 'text-blue-600 bg-blue-50 hover:bg-blue-100'
+                      : 'text-slate-700 hover:bg-blue-50 hover:text-blue-600'
+                  }`}
                   style={{ fontFamily: 'var(--font-body)' }}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0"/>
-                  {item}
+                  <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${item.highlight ? 'bg-blue-600 animate-pulse' : 'bg-blue-400'}`}/>
+                  {item.label}
                 </a>
               ))}
               <div className="mt-2 pt-2 border-t border-slate-100 flex items-center gap-1.5 px-3 text-xs font-medium text-blue-600"

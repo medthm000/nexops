@@ -19,7 +19,7 @@ export default function LandingPage({ onStartPresentation }: LandingPageProps) {
       <HeroSection onStartPresentation={onStartPresentation} />
       <AboutSection />
       <TeamSection />
-      <AuditTool />
+      <AuditTool onStartPresentation={onStartPresentation} />
       <Footer onStartPresentation={onStartPresentation} />
       <ChatButton theme="light" />
     </main>

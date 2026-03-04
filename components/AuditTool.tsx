@@ -142,7 +142,11 @@ const CHALLENGES = [
   },
 ]
 
-export default function AuditTool() {
+interface AuditToolProps {
+  onStartPresentation?: () => void
+}
+
+export default function AuditTool({ onStartPresentation }: AuditToolProps) {
   const ref    = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
@@ -454,11 +458,12 @@ export default function AuditTool() {
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                    <a href="#contact"
+                    <button
+                      onClick={() => onStartPresentation?.()}
                       className="flex-1 text-center bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-2xl transition-all hover:-translate-y-0.5 shadow-lg shadow-blue-500/20"
                       style={{ fontFamily: 'var(--font-body)' }}>
-                      Book My Free Strategy Call →
-                    </a>
+                      Explore Our AI Solutions →
+                    </button>
                     <button onClick={reset}
                       className="text-slate-500 hover:text-slate-700 font-medium px-6 py-4 rounded-2xl border border-slate-200 hover:border-slate-300 transition-all text-sm"
                       style={{ fontFamily: 'var(--font-body)' }}>
