@@ -125,7 +125,7 @@ export default function GeminiChat({ apiKey, onClose, theme = 'light' }: GeminiC
             'Authorization': `Bearer ${apiKey}`
           },
           body: JSON.stringify({
-            model: 'qwen-flash',
+            model: 'qwen-turbo',
             messages: messages_payload,
             max_tokens: 150,
             temperature: 0.7
