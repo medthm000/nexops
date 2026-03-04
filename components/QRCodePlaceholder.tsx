@@ -4,7 +4,7 @@ interface QRCodeProps {
   size?: number
 }
 
-const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdVACVvb77ihqKCbtk730DR-Kc8TH9btA5OFrf3G3QxGhwS1Q/viewform?usp=preview"
+const FORM_URL = "https://nexopsai.vercel.app/"
 
 export default function QRCodePlaceholder({ size = 200 }: QRCodeProps) {
   const encodedUrl = encodeURIComponent(FORM_URL)
@@ -19,7 +19,7 @@ export default function QRCodePlaceholder({ size = 200 }: QRCodeProps) {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={qrSrc}
-          alt="Scan to access NexOps AI Google Form"
+          alt="Scan to visit NexOps AI website"
           width={size}
           height={size}
           style={{ display: 'block', width: '100%', height: '100%' }}

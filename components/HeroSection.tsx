@@ -302,7 +302,7 @@ export default function HeroSection({ onStartPresentation }: HeroProps) {
 
                 <div className="mt-4 text-center">
                   <p className="text-xs text-slate-500 mb-1" style={{ fontFamily: 'var(--font-mono)' }}>Point camera at QR code</p>
-                  <p className="text-xs font-semibold text-blue-400 truncate max-w-[220px]" style={{ fontFamily: 'var(--font-mono)' }}>Google Form Survey</p>
+                  <p className="text-xs font-semibold text-blue-400 truncate max-w-[220px]" style={{ fontFamily: 'var(--font-mono)' }}>nexopsai.vercel.app</p>
                 </div>
               </motion.div>
 
