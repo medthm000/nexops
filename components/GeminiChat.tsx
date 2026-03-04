@@ -112,6 +112,7 @@ export default function GeminiChat({ apiKey, onClose, theme = 'light' }: GeminiC
         { role: 'system', content: SYSTEM_CONTEXT },
         ...messages
           .slice(1) // skip the initial greeting
+          .slice(-6) // keep only last 6 messages to save tokens
           .map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.text })),
         { role: 'user', content: text }
       ]
