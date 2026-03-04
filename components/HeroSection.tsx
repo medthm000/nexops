@@ -260,7 +260,7 @@ export default function HeroSection({ onStartPresentation }: HeroProps) {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="hidden lg:flex justify-center lg:justify-end"
+            className="flex justify-center mt-8 lg:mt-0 lg:justify-end"
           >
             <div className="relative flex flex-col items-center gap-5">
               <motion.div

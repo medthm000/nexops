@@ -123,7 +123,13 @@ export default function Navbar() {
                 <a
                   key={item.label}
                   href={item.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setMobileOpen(false)
+                    setTimeout(() => {
+                      document.querySelector(item.href)?.scrollIntoView({ behavior: 'smooth' })
+                    }, 280)
+                  }}
                   className={`flex items-center gap-2 px-3 py-3 rounded-xl font-medium text-sm transition-colors ${
                     item.highlight
                       ? 'text-blue-600 bg-blue-50 hover:bg-blue-100'
