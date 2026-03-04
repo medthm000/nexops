@@ -20,14 +20,14 @@ const QUESTIONS: Question[] = [
     question: 'What industry is your business in?',
     cols: 4,
     choices: [
-      { label: 'E-Commerce & Online Sales', icon: '🛒' },
-      { label: 'Professional Services',     icon: '💼' },
-      { label: 'Retail & Products',         icon: '🏪' },
-      { label: 'Restaurant & Food',         icon: '🍽️' },
-      { label: 'Healthcare & Wellness',     icon: '🏥' },
-      { label: 'Real Estate',               icon: '🏢' },
-      { label: 'Education & Coaching',      icon: '🎓' },
-      { label: 'Other',                     icon: '⚙️' },
+      { label: 'E-Commerce & Retail',    icon: '🛒' },
+      { label: 'Professional Services',  icon: '💼' },
+      { label: 'Restaurant & Food',      icon: '🍴' },
+      { label: 'Healthcare & Wellness',  icon: '🏥' },
+      { label: 'Real Estate',            icon: '🏢' },
+      { label: 'Education & Coaching',   icon: '🎓' },
+      { label: 'Finance & Accounting',   icon: '📊' },
+      { label: 'Other',                  icon: '⚙️' },
     ],
   },
   {
@@ -35,203 +35,84 @@ const QUESTIONS: Question[] = [
     question: 'How many people are on your team?',
     cols: 2,
     choices: [
-      { label: 'Just me',       icon: '🙋' },
-      { label: '2–10 people',   icon: '👥' },
-      { label: '11–50 people',  icon: '🏢' },
-      { label: '50+ people',    icon: '🏭' },
+      { label: 'Just me',      icon: '🙋' },
+      { label: '2-10 people',  icon: '👥' },
+      { label: '11-50 people', icon: '🏢' },
+      { label: '50+ people',   icon: '🏭' },
     ],
   },
+  // ── Customer ────────────────────────────────────────────────────────────────
   {
-    id: 'main_goal', category: 'Business Profile',
-    question: 'What is your #1 business goal this year?',
+    id: 'customer_pain', category: 'Customer & Sales',
+    question: 'What is your biggest challenge with customers right now?',
     cols: 2,
     choices: [
-      { label: 'Increase revenue & sales',       icon: '📈' },
-      { label: 'Reduce operational costs',       icon: '💡' },
-      { label: 'Scale operations faster',        icon: '🚀' },
-      { label: 'Improve customer satisfaction',  icon: '⭐' },
+      { label: 'Slow response time',        icon: '⏱️' },
+      { label: 'Low lead conversion rate',  icon: '📉' },
+      { label: 'Poor customer retention',   icon: '🔄' },
+      { label: 'Hard to find new clients',  icon: '🔍' },
     ],
   },
+  // ── Marketing ──────────────────────────────────────────────────────────────
   {
-    id: 'business_age', category: 'Business Profile',
-    question: 'How long has your business been operating?',
+    id: 'marketing_status', category: 'Marketing',
+    question: 'How is your marketing handled today?',
     cols: 2,
     choices: [
-      { label: 'Less than 1 year', icon: '🌱' },
-      { label: '1–3 years',        icon: '🌿' },
-      { label: '3–7 years',        icon: '🌳' },
-      { label: '7+ years',         icon: '🏅' },
+      { label: 'I do it myself, inconsistently', icon: '🙋' },
+      { label: 'A team member handles it',       icon: '👤' },
+      { label: 'We use a freelancer / agency',   icon: '🤝' },
+      { label: 'We barely do any marketing',     icon: '😴' },
     ],
   },
-  // ── Customer Experience ────────────────────────────────────────────────────
+  // ── Operations ─────────────────────────────────────────────────────────────
   {
-    id: 'inquiry_handling', category: 'Customer Experience',
-    question: 'How do you handle customer inquiries today?',
+    id: 'ops_pain', category: 'Operations',
+    question: 'Where does your team lose the most time every week?',
     cols: 2,
     choices: [
-      { label: 'Phone & manual replies', icon: '📞' },
-      { label: 'Email only',             icon: '📧' },
-      { label: 'WhatsApp / live chat',   icon: '💬' },
-      { label: 'No clear process',       icon: '😅' },
+      { label: 'Emails & communication',    icon: '📧' },
+      { label: 'Reports & data entry',      icon: '📋' },
+      { label: 'Follow-ups & scheduling',   icon: '📅' },
+      { label: 'Financial tracking',        icon: '💰' },
     ],
   },
+  // ── AI readiness ───────────────────────────────────────────────────────────
   {
-    id: 'response_time', category: 'Customer Experience',
-    question: 'How fast do you typically respond to customers?',
+    id: 'ai_readiness', category: 'AI Readiness',
+    question: 'Have you tried AI or automation tools before?',
     cols: 2,
     choices: [
-      { label: 'Under 1 hour',     icon: '⚡' },
-      { label: 'Same day',         icon: '📅' },
-      { label: 'Next day or more', icon: '🐌' },
-      { label: 'Inconsistent',     icon: '🎲' },
-    ],
-  },
-  {
-    id: 'lead_acquisition', category: 'Customer Experience',
-    question: 'How do you currently acquire new clients?',
-    cols: 2,
-    choices: [
-      { label: 'Word of mouth',    icon: '🗣️' },
-      { label: 'Social media',     icon: '📱' },
-      { label: 'Paid advertising', icon: '🎯' },
-      { label: 'Mix of channels',  icon: '🔀' },
-    ],
-  },
-  {
-    id: 'followup', category: 'Customer Experience',
-    question: 'How would you describe your client follow-up process?',
-    cols: 2,
-    choices: [
-      { label: 'Systematic & consistent', icon: '✅' },
-      { label: 'Mostly manual',           icon: '✍️' },
-      { label: 'Hit or miss',             icon: '🎰' },
-      { label: 'We rarely follow up',     icon: '😬' },
-    ],
-  },
-  // ── Marketing & Content ────────────────────────────────────────────────────
-  {
-    id: 'content_frequency', category: 'Marketing & Content',
-    question: 'How often does your business publish content online?',
-    cols: 2,
-    choices: [
-      { label: 'Daily',                icon: '🔥' },
-      { label: 'Several times a week', icon: '📆' },
-      { label: 'Monthly',              icon: '📅' },
-      { label: 'Rarely or never',      icon: '😴' },
-    ],
-  },
-  {
-    id: 'content_creation', category: 'Marketing & Content',
-    question: 'Who currently creates your marketing content?',
-    cols: 2,
-    choices: [
-      { label: 'I do it all myself',   icon: '🙋' },
-      { label: 'A team member',        icon: '👤' },
-      { label: 'Freelancers / agency', icon: '🤝' },
-      { label: 'We have no strategy',  icon: '🤷' },
-    ],
-  },
-  {
-    id: 'paid_ads', category: 'Marketing & Content',
-    question: 'Do you currently run paid ad campaigns?',
-    cols: 2,
-    choices: [
-      { label: 'Yes, consistently', icon: '✅' },
-      { label: 'Tried but stopped', icon: '⏸️' },
-      { label: 'Planning to start', icon: '📋' },
-      { label: 'Not at all',        icon: '❌' },
-    ],
-  },
-  {
-    id: 'marketing_challenge', category: 'Marketing & Content',
-    question: "What's your biggest marketing challenge?",
-    cols: 2,
-    choices: [
-      { label: 'Creating content consistently', icon: '✏️' },
-      { label: 'Knowing which ads perform',     icon: '📊' },
-      { label: 'Reaching the right audience',   icon: '🎯' },
-      { label: 'Lack of time & resources',      icon: '⏰' },
-    ],
-  },
-  // ── Operations & Data ──────────────────────────────────────────────────────
-  {
-    id: 'financial_tracking', category: 'Operations & Data',
-    question: 'How do you manage invoicing & financial tracking?',
-    cols: 2,
-    choices: [
-      { label: 'Manual spreadsheets',   icon: '📋' },
-      { label: 'Accounting software',   icon: '💻' },
-      { label: 'Outsourced to someone', icon: '🤝' },
-      { label: "It's disorganised",     icon: '🗂️' },
-    ],
-  },
-  {
-    id: 'data_analysis', category: 'Operations & Data',
-    question: 'How often do you analyse your business data & KPIs?',
-    cols: 2,
-    choices: [
-      { label: 'Daily',                 icon: '📈' },
-      { label: 'Weekly',                icon: '📅' },
-      { label: 'Monthly',               icon: '🗓️' },
-      { label: "Rarely, I go by gut",   icon: '🤔' },
-    ],
-  },
-  {
-    id: 'email_management', category: 'Operations & Data',
-    question: 'How do you manage business emails & communications?',
-    cols: 2,
-    choices: [
-      { label: 'I handle everything manually', icon: '🙋' },
-      { label: 'Shared team inbox',            icon: '👥' },
-      { label: 'Messages often get missed',    icon: '📭' },
-      { label: "It's overwhelming",            icon: '😩' },
-    ],
-  },
-  {
-    id: 'ai_experience', category: 'Operations & Data',
-    question: 'Have you used AI or automation tools before?',
-    cols: 2,
-    choices: [
-      { label: 'Yes, actively',       icon: '🤖' },
-      { label: 'Tried a few basics',  icon: '🔰' },
-      { label: 'Aware but not tried', icon: '👀' },
-      { label: 'New to this topic',   icon: '🌱' },
+      { label: 'Yes, actively using them',    icon: '🤖' },
+      { label: 'Tried but did not stick',     icon: '🔰' },
+      { label: 'Curious but never started',   icon: '👀' },
+      { label: 'Completely new to AI',        icon: '🌱' },
     ],
   },
   // ── Vision ─────────────────────────────────────────────────────────────────
   {
-    id: 'bottleneck', category: 'Your Vision',
-    question: "What's your biggest operational bottleneck right now?",
+    id: 'priority', category: 'Your Vision',
+    question: 'What outcome matters most to you in the next 3 months?',
     cols: 2,
     choices: [
-      { label: 'Not enough time for everything', icon: '⏱️' },
-      { label: 'Hard to find & keep clients',    icon: '🔍' },
-      { label: 'Operations are chaotic',         icon: '🌪️' },
-      { label: "Can't measure ROI clearly",      icon: '❓' },
-    ],
-  },
-  {
-    id: 'timeline', category: 'Your Vision',
-    question: 'How soon do you need to see results?',
-    cols: 2,
-    choices: [
-      { label: 'Within a month',    icon: '🚀' },
-      { label: 'Within 3 months',   icon: '📅' },
-      { label: 'Within 6 months',   icon: '🗓️' },
-      { label: 'Long-term planning', icon: '🔮' },
+      { label: 'More sales & revenue',         icon: '📈' },
+      { label: 'Save time & cut manual work',  icon: '⏰' },
+      { label: 'Better client experience',     icon: '⭐' },
+      { label: 'Clear data & decision making', icon: '📊' },
     ],
   },
 ]
 
-const TOTAL_Q = QUESTIONS.length // 18
-// Steps: 0=intro, 1–18=questions, 19=contact form, 20=loading, 21=result
+const TOTAL_Q = QUESTIONS.length // 7
+// Steps: 0=intro, 1–7=questions, 8=contact form, 9=loading, 10=result
 
 const CAT_COLOR: Record<string, string> = {
-  'Business Profile':    '#2563eb',
-  'Customer Experience': '#7c3aed',
-  'Marketing & Content': '#0891b2',
-  'Operations & Data':   '#059669',
-  'Your Vision':         '#d97706',
+  'Business Profile': '#2563eb',
+  'Customer & Sales': '#7c3aed',
+  'Marketing':        '#0891b2',
+  'Operations':       '#059669',
+  'AI Readiness':     '#0891b2',
+  'Your Vision':      '#d97706',
 }
 
 const CHALLENGES = [
@@ -269,6 +150,8 @@ export default function AuditTool() {
   const [answers,  setAnswers]  = useState<Record<string, string>>({})
   const [fullName, setFullName] = useState('')
   const [company,  setCompany]  = useState('')
+  const [phone,    setPhone]    = useState('')
+  const [email,    setEmail]    = useState('')
   const [report,   setReport]   = useState('')
   const [error,    setError]    = useState('')
 
@@ -287,10 +170,12 @@ export default function AuditTool() {
   }
 
   const submitAudit = async () => {
-    if (!fullName.trim() || !company.trim()) return
+    if (!fullName.trim() || !company.trim() || !phone.trim() || !email.trim()) return
     const allAnswers: Record<string, string> = {
       'Full name':    fullName.trim(),
       'Company name': company.trim(),
+      'Phone':        phone.trim(),
+      'Email':        email.trim(),
       ...Object.fromEntries(QUESTIONS.map(q => [q.question, answers[q.id] ?? 'N/A'])),
     }
     setStep(20)
@@ -311,7 +196,7 @@ export default function AuditTool() {
   }
 
   const reset = () => {
-    setStep(0); setAnswers({}); setFullName(''); setCompany(''); setReport(''); setError('')
+    setStep(0); setAnswers({}); setFullName(''); setCompany(''); setPhone(''); setEmail(''); setReport(''); setError('')
   }
 
   return (
@@ -335,7 +220,7 @@ export default function AuditTool() {
             Discover the <span className="gradient-text">AI opportunities</span> in your business
           </h2>
           <p className="text-lg text-slate-500 max-w-2xl mx-auto" style={{ fontFamily: 'var(--font-body)' }}>
-            Answer ~20 quick questions and our AI will generate a personalised strategy report — pinpointing exactly where custom AI can accelerate your growth.
+            Answer 7 quick questions and our AI will generate a personalised report — pinpointing exactly which NexOps solution fits your business.
           </p>
         </motion.div>
 
@@ -373,7 +258,7 @@ export default function AuditTool() {
                     </p>
                   </div>
                   <div className="grid grid-cols-3 gap-4 max-w-sm mx-auto">
-                    {[{ n: '~20', l: 'Questions' }, { n: '3 min', l: 'Duration' }, { n: '100%', l: 'Free' }].map(s => (
+                    {[{ n: '7', l: 'Questions' }, { n: '2 min', l: 'Duration' }, { n: '100%', l: 'Free' }].map(s => (
                       <div key={s.l} className="text-center p-4 bg-blue-50 rounded-2xl border border-blue-100">
                         <div className="text-lg font-black text-blue-600">{s.n}</div>
                         <div className="text-xs text-slate-500 mt-1" style={{ fontFamily: 'var(--font-mono)' }}>{s.l}</div>
@@ -424,7 +309,7 @@ export default function AuditTool() {
                 </motion.div>
               )}
 
-              {/* ── CONTACT FORM (step 19) ───────────────────────────────── */}
+              {/* ── CONTACT FORM ─────────────────────────────────────────────── */}
               {step === TOTAL_Q + 1 && (
                 <motion.div key="contact"
                   initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -40 }}
@@ -435,56 +320,61 @@ export default function AuditTool() {
                       style={{ fontFamily: 'var(--font-body)' }}>
                       ← Back
                     </button>
-                    <span className="text-xs text-slate-400" style={{ fontFamily: 'var(--font-mono)' }}>
-                      Final step
-                    </span>
+                    <span className="text-xs text-slate-400" style={{ fontFamily: 'var(--font-mono)' }}>Final step</span>
                   </div>
                   <div className="mb-8 text-center">
-                    <div className="text-4xl mb-4">🤝</div>
+                    <div className="text-4xl mb-4">👋</div>
                     <h3 className="text-2xl font-black text-slate-900 mb-2" style={{ fontFamily: 'var(--font-display)' }}>
-                      Almost there — who should we address this report to?
+                      One last step — your contact details
                     </h3>
                     <p className="text-slate-500" style={{ fontFamily: 'var(--font-body)' }}>
-                      Our AI will personalise the report with your name and company.
+                      Our AI will personalise your report and a NexOps specialist will reach out within 24h.
                     </p>
                   </div>
-                  <div className="max-w-md mx-auto space-y-5">
+                  <div className="max-w-md mx-auto space-y-4">
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-2" style={{ fontFamily: 'var(--font-body)' }}>
-                        Your full name *
-                      </label>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2" style={{ fontFamily: 'var(--font-body)' }}>Full name *</label>
                       <input type="text" value={fullName} onChange={e => setFullName(e.target.value)}
-                        placeholder="e.g. Ahmed Benali"
+                        placeholder="Ahmed Benali"
                         className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-400 focus:outline-none text-slate-900 transition-colors"
                         style={{ fontFamily: 'var(--font-body)' }} />
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-2" style={{ fontFamily: 'var(--font-body)' }}>
-                        Company name *
-                      </label>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2" style={{ fontFamily: 'var(--font-body)' }}>Business name *</label>
                       <input type="text" value={company} onChange={e => setCompany(e.target.value)}
-                        placeholder="e.g. TechStore Maroc"
+                        placeholder="TechStore Maroc"
                         className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-400 focus:outline-none text-slate-900 transition-colors"
-                        style={{ fontFamily: 'var(--font-body)' }}
-                        onKeyDown={e => { if (e.key === 'Enter' && fullName.trim() && company.trim()) submitAudit() }} />
+                        style={{ fontFamily: 'var(--font-body)' }} />
                     </div>
-                    {error && (
-                      <p className="text-red-500 text-sm" style={{ fontFamily: 'var(--font-body)' }}>{error}</p>
-                    )}
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2" style={{ fontFamily: 'var(--font-body)' }}>Phone number *</label>
+                      <input type="tel" value={phone} onChange={e => setPhone(e.target.value)}
+                        placeholder="+212 6XX XXX XXX"
+                        className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-400 focus:outline-none text-slate-900 transition-colors"
+                        style={{ fontFamily: 'var(--font-body)' }} />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2" style={{ fontFamily: 'var(--font-body)' }}>Email address *</label>
+                      <input type="email" value={email} onChange={e => setEmail(e.target.value)}
+                        placeholder="ahmed@company.ma"
+                        className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-400 focus:outline-none text-slate-900 transition-colors"
+                        style={{ fontFamily: 'var(--font-body)' }} />
+                    </div>
+                    {error && <p className="text-red-500 text-sm" style={{ fontFamily: 'var(--font-body)' }}>{error}</p>}
                     <button onClick={submitAudit}
-                      disabled={!fullName.trim() || !company.trim()}
+                      disabled={!fullName.trim() || !company.trim() || !phone.trim() || !email.trim()}
                       className="w-full bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold py-4 rounded-2xl transition-all hover:-translate-y-0.5 shadow-lg shadow-blue-500/20 text-lg"
                       style={{ fontFamily: 'var(--font-body)' }}>
                       Generate My AI Report →
                     </button>
                     <p className="text-xs text-center text-slate-400" style={{ fontFamily: 'var(--font-mono)' }}>
-                      Used only to personalise your report. We never spam.
+                      Your data is used only to personalise your report. We never spam.
                     </p>
                   </div>
                 </motion.div>
               )}
 
-              {/* ── LOADING (step 20) ────────────────────────────────────── */}
+              {/* ── LOADING ────────────────────────────────────────────────── */}
               {step === 20 && (
                 <motion.div key="loading"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }}
@@ -540,9 +430,7 @@ export default function AuditTool() {
                     className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-100 p-6 sm:p-8">
                     <div className="flex items-center gap-2 mb-4">
                       <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white text-xs font-black">AI</div>
-                      <span className="text-xs font-semibold text-blue-600" style={{ fontFamily: 'var(--font-mono)' }}>
-                        NexOps AI Consultant
-                      </span>
+                      <span className="text-xs font-semibold text-blue-600" style={{ fontFamily: 'var(--font-mono)' }}>NexOps AI</span>
                     </div>
                     <div className="text-slate-700 leading-relaxed whitespace-pre-wrap"
                       style={{ fontFamily: 'var(--font-body)', fontSize: '0.97rem' }}>

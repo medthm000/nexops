@@ -3,81 +3,69 @@
 import { useState, useMemo, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 
-// â”€â”€ Service configurations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 type ServiceConfig = {
-  id: string
-  label: string
-  icon: string
-  tagline: string
-  color: string
+  id: string; label: string; icon: string; tagline: string; color: string
   sliderA: { label: string; min: number; max: number; step: number; unit: string; def: number }
   sliderB: { label: string; min: number; max: number; step: number; unit: string; def: number }
   calc: (a: number, b: number) => {
-    value: number; hours: number; payback: number
-    valueLabel: string; hoursLabel: string; qualifier: string
+    metric1: number; metric1Unit: string; metric1Label: string
+    metric2: number; metric2Unit: string; metric2Label: string
+    metric3: number; metric3Unit: string; metric3Label: string
+    qualifier: string
   }
 }
 
 const SERVICES: ServiceConfig[] = [
   {
-    id: 'marketing', label: 'Marketing AI', icon: 'ðŸ“£', color: '#2563eb',
-    tagline: 'Scale content, optimise ad spend & grow revenue',
-    sliderA: { label: 'Monthly marketing & ad budget', min: 2000, max: 100000, step: 500, unit: 'MAD/month', def: 15000 },
+    id: 'marketing', label: 'Marketing AI', icon: 'U+1F4E3', color: '#2563eb',
+    tagline: 'Scale content, optimise ad spend and grow revenue',
+    sliderA: { label: 'Monthly marketing and ad budget', min: 2000, max: 100000, step: 500, unit: 'MAD/month', def: 15000 },
     sliderB: { label: 'Content pieces needed monthly', min: 5, max: 150, step: 5, unit: 'pieces', def: 25 },
     calc: (budget, pieces) => ({
-      value:      Math.round(budget * 0.33),
-      hours:      Math.round(pieces * 3.5),
-      payback:    2,
-      valueLabel: 'MAD/month in additional revenue from smarter campaigns',
-      hoursLabel: 'hours freed from content creation each month',
-      qualifier:  'Avg 33% improvement in campaign ROI + content at 10Ã— speed',
+      metric1: Math.round(budget * 0.33), metric1Unit: 'MAD/mo', metric1Label: 'Extra revenue from smarter campaigns',
+      metric2: Math.round(pieces * 3.5),  metric2Unit: 'hrs/mo',  metric2Label: 'Hours freed from content creation',
+      metric3: 2,                          metric3Unit: 'months',  metric3Label: 'Estimated payback period',
+      qualifier: 'Avg 33% campaign ROI improvement + content at 10x speed',
     }),
   },
   {
-    id: 'support', label: 'Support AI', icon: 'ðŸ’¬', color: '#7c3aed',
+    id: 'support', label: 'Support AI', icon: 'U+1F4AC', color: '#7c3aed',
     tagline: 'Respond to every customer instantly, 24/7',
     sliderA: { label: 'Monthly customer inquiries', min: 50, max: 5000, step: 50, unit: 'inquiries', def: 300 },
     sliderB: { label: 'Avg cost per support interaction', min: 20, max: 500, step: 10, unit: 'MAD', def: 80 },
     calc: (inquiries, cost) => ({
-      value:      Math.round(inquiries * 0.78 * cost * 0.85),
-      hours:      Math.round(inquiries * 0.78 * 0.22),
-      payback:    1,
-      valueLabel: 'MAD/month in support cost optimisation',
-      hoursLabel: 'hours freed for complex, high-value cases',
-      qualifier:  '78% of inquiries handled automatically â€” zero wait time',
+      metric1: Math.round(inquiries * 0.78 * cost * 0.85), metric1Unit: 'MAD/mo', metric1Label: 'Value from automated support handling',
+      metric2: Math.round(inquiries * 0.78 * 0.22),        metric2Unit: 'hrs/mo',  metric2Label: 'Hours freed for complex cases',
+      metric3: 1,                                           metric3Unit: 'month',   metric3Label: 'Estimated payback period',
+      qualifier: '78% of inquiries handled automatically, zero wait time',
     }),
   },
   {
-    id: 'email', label: 'Email AI', icon: 'ðŸ“§', color: '#0891b2',
+    id: 'email', label: 'Email AI', icon: 'U+1F4E7', color: '#0891b2',
     tagline: 'Turn every email into a business opportunity',
-    sliderA: { label: 'Emails sent & received monthly', min: 200, max: 30000, step: 200, unit: 'emails', def: 2000 },
+    sliderA: { label: 'Emails sent and received monthly', min: 200, max: 30000, step: 200, unit: 'emails', def: 2000 },
     sliderB: { label: 'Average deal value per conversion', min: 200, max: 20000, step: 200, unit: 'MAD', def: 2000 },
     calc: (emails, deal) => ({
-      value:      Math.round(emails * 0.003 * deal * 1.35),
-      hours:      Math.round(emails * 0.003 * 45),
-      payback:    2,
-      valueLabel: 'MAD/month in additional revenue from personalised outreach',
-      hoursLabel: 'hours saved on manual email management',
-      qualifier:  '+35% conversion lift with AI-personalised email sequences',
+      metric1: Math.round(emails * 0.003 * deal * 1.35), metric1Unit: 'MAD/mo', metric1Label: 'Additional revenue from personalised outreach',
+      metric2: Math.round(emails * 0.003 * 45),          metric2Unit: 'hrs/mo',  metric2Label: 'Hours saved on manual email management',
+      metric3: 2,                                         metric3Unit: 'months',  metric3Label: 'Estimated payback period',
+      qualifier: '+35% conversion lift with AI-personalised email sequences',
     }),
   },
   {
-    id: 'finance', label: 'Finance AI', icon: 'ðŸ“Š', color: '#059669',
+    id: 'finance', label: 'Finance AI', icon: 'U+1F4CA', color: '#059669',
     tagline: 'From raw data to clear business decisions in seconds',
-    sliderA: { label: 'Documents processed monthly', min: 10, max: 1000, step: 10, unit: 'documents', def: 60 },
-    sliderB: { label: 'Hours spent weekly on data & reporting', min: 2, max: 40, step: 1, unit: 'hrs/week', def: 10 },
+    sliderA: { label: 'Documents processed monthly', min: 10, max: 1000, step: 10, unit: 'docs', def: 60 },
+    sliderB: { label: 'Hours spent weekly on data and reporting', min: 2, max: 40, step: 1, unit: 'hrs/week', def: 10 },
     calc: (docs, hrs) => ({
-      value:      Math.round(hrs * 4.3 * 200 * 0.88),
-      hours:      Math.round(hrs * 4.3 * 0.88),
-      payback:    1,
-      valueLabel: 'MAD/month in finance team productivity recovered',
-      hoursLabel: 'hours freed from manual data processing',
-      qualifier:  '88% of reporting automated â€” decisions in seconds, not days',
+      metric1: Math.round(hrs * 4.3 * 200 * 0.88), metric1Unit: 'MAD/mo', metric1Label: 'Finance team productivity recovered',
+      metric2: Math.round(hrs * 4.3 * 0.88),        metric2Unit: 'hrs/mo',  metric2Label: 'Hours freed from manual data processing',
+      metric3: 1,                                    metric3Unit: 'month',   metric3Label: 'Estimated payback period',
+      qualifier: '88% of reporting automated, decisions in seconds not days',
     }),
   },
 ]
 
-// â”€â”€ Slider â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function Slider({ label, value, min, max, step, unit, color, setter }: {
   label: string; value: number; min: number; max: number; step: number; unit: string
   color: string; setter: (v: number) => void
@@ -109,14 +97,12 @@ function Slider({ label, value, min, max, step, unit, color, setter }: {
   )
 }
 
-// â”€â”€ Main â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export default function ROICalculator() {
   const ref    = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   const [activeId, setActiveId] = useState('marketing')
   const svc = SERVICES.find(s => s.id === activeId)!
-
   const [sliderA, setSliderA] = useState(svc.sliderA.def)
   const [sliderB, setSliderB] = useState(svc.sliderB.def)
 
@@ -127,19 +113,17 @@ export default function ROICalculator() {
   const r = useMemo(() => svc.calc(sliderA, sliderB), [svc, sliderA, sliderB])
 
   const cards = [
-    { label: 'Monthly value unlocked', value: r.value.toLocaleString(), unit: 'MAD',   icon: 'ðŸ’°', note: r.valueLabel,  bg: '#f0fdf4', border: '#bbf7d0', textMain: '#15803d', textSub: '#22c55e' },
-    { label: 'Time freed per month',   value: r.hours.toLocaleString(), unit: 'hours', icon: 'â±ï¸', note: r.hoursLabel,  bg: '#eff6ff', border: '#bfdbfe', textMain: '#1d4ed8', textSub: '#3b82f6' },
-    { label: 'Payback period',         value: `${r.payback}`,           unit: r.payback === 1 ? 'month' : 'months', icon: 'ðŸ“ˆ', note: 'Typical time to positive ROI', bg: '#eef2ff', border: '#c7d2fe', textMain: '#3730a3', textSub: '#6366f1' },
+    { label: 'Revenue / Value Impact', value: r.metric1.toLocaleString(), unit: r.metric1Unit, note: r.metric1Label, bg: '#f0fdf4', border: '#bbf7d0', textMain: '#15803d', textSub: '#22c55e', icon: 'MAD' },
+    { label: 'Time Saved',             value: r.metric2.toLocaleString(), unit: r.metric2Unit, note: r.metric2Label, bg: '#eff6ff', border: '#bfdbfe', textMain: '#1d4ed8', textSub: '#3b82f6', icon: 'HRS' },
+    { label: 'Payback Period',         value: `${r.metric3}`,             unit: r.metric3Unit, note: r.metric3Label, bg: '#eef2ff', border: '#c7d2fe', textMain: '#3730a3', textSub: '#6366f1', icon: 'ROI' },
   ]
 
   return (
     <section id="roi" className="py-16 lg:py-24 relative overflow-hidden" style={{ background: '#ffffff' }} ref={ref}>
       <div className="absolute top-0 left-0 right-0 h-px"
         style={{ background: 'linear-gradient(90deg, transparent, rgba(59,130,246,0.2), transparent)' }} />
-
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Header */}
         <motion.div initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }} className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-full px-4 py-2 mb-4">
@@ -151,11 +135,10 @@ export default function ROICalculator() {
             Estimate the <span className="gradient-text">business value</span> of your AI solution
           </h2>
           <p className="text-lg text-slate-500 max-w-xl mx-auto" style={{ fontFamily: 'var(--font-body)' }}>
-            Select the AI solution that fits your needs and see the projected impact for your business.
+            Select the AI solution that fits your business and see the projected impact.
           </p>
         </motion.div>
 
-        {/* Service tabs */}
         <motion.div initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
           className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
@@ -167,34 +150,28 @@ export default function ROICalculator() {
                 background:  activeId === s.id ? `${s.color}0f` : 'white',
                 boxShadow:   activeId === s.id ? `0 0 0 1px ${s.color}30` : 'none',
               }}>
-              <div className="text-2xl mb-2">{s.icon}</div>
-              <div className="text-sm font-bold" style={{ fontFamily: 'var(--font-display)', color: activeId === s.id ? s.color : '#1e293b' }}>
+              <div className="text-sm font-bold mb-1" style={{ fontFamily: 'var(--font-display)', color: activeId === s.id ? s.color : '#1e293b' }}>
                 {s.label}
               </div>
-              <div className="text-xs text-slate-500 mt-0.5 leading-snug" style={{ fontFamily: 'var(--font-body)' }}>
+              <div className="text-xs text-slate-500 leading-snug" style={{ fontFamily: 'var(--font-body)' }}>
                 {s.tagline}
               </div>
             </button>
           ))}
         </motion.div>
 
-        {/* Body */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.2 }}
           className="grid lg:grid-cols-2 gap-8">
 
-          {/* Sliders */}
           <div className="bg-white rounded-3xl border border-slate-200 p-8 space-y-8"
             style={{ boxShadow: '0 8px 40px rgba(0,0,0,0.06)' }}>
             <div>
-              <div className="flex items-center gap-3 mb-1">
-                <span className="text-2xl">{svc.icon}</span>
-                <h3 className="text-lg font-bold text-slate-900" style={{ fontFamily: 'var(--font-display)' }}>
-                  {svc.label} â€” Your Numbers
-                </h3>
-              </div>
+              <h3 className="text-lg font-bold text-slate-900 mb-1" style={{ fontFamily: 'var(--font-display)' }}>
+                {svc.label}  Your Numbers
+              </h3>
               <p className="text-sm text-slate-400" style={{ fontFamily: 'var(--font-body)' }}>
-                Adjust the sliders to reflect your current situation.
+                Adjust the sliders to match your current situation.
               </p>
             </div>
             <Slider label={svc.sliderA.label} value={sliderA} min={svc.sliderA.min} max={svc.sliderA.max}
@@ -208,7 +185,6 @@ export default function ROICalculator() {
             </div>
           </div>
 
-          {/* Results */}
           <div className="flex flex-col gap-4">
             {cards.map((c, i) => (
               <motion.div key={c.label} animate={{ opacity: 1 }}
@@ -231,20 +207,24 @@ export default function ROICalculator() {
                       {c.note}
                     </div>
                   </div>
-                  <div className="text-3xl ml-4">{c.icon}</div>
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center text-xs font-black ml-4 flex-shrink-0"
+                    style={{ background: `${c.textSub}20`, color: c.textSub }}>
+                    {c.icon}
+                  </div>
                 </div>
               </motion.div>
             ))}
+
             <a href="#contact"
               className="text-center font-bold py-4 rounded-2xl text-white transition-all hover:-translate-y-0.5 shadow-lg text-sm"
               style={{ background: svc.color, boxShadow: `0 8px 20px ${svc.color}35`, fontFamily: 'var(--font-body)' }}>
-              Get My Custom {svc.label} Proposal â†’
+              Get My Custom {svc.label} Proposal
             </a>
           </div>
         </motion.div>
 
         <p className="text-center text-xs text-slate-400 mt-8" style={{ fontFamily: 'var(--font-mono)' }}>
-          * Projections are indicative and based on industry benchmarks. Actual impact depends on implementation scope.
+          Projections are indicative and based on industry benchmarks. Actual impact depends on implementation scope.
         </p>
       </div>
     </section>

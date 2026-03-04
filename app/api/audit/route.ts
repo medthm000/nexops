@@ -1,18 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const SYSTEM_PROMPT = `You are a senior AI consultant at NexOps. NexOps builds custom AI agents for SMBs:
-• Marketing AI (Houda): content creation, ad optimisation, social media automation
-• Customer Support AI (Soufiane): 24/7 chatbot, lead qualification, WhatsApp & web
-• Email AI (Ilyas): inbox automation, personalised outreach, follow-up sequences
-• Finance AI (Reda): invoice processing, KPI dashboards, automated reporting
+const SYSTEM_PROMPT = `You are an AI at NexOps. NexOps builds custom AI agents for SMBs:
+- Marketing AI (Houda): content creation, ad optimisation, social media automation
+- Customer Support AI (Soufiane): 24/7 chatbot, lead qualification, WhatsApp & web
+- Email AI (Ilyas): inbox automation, personalised outreach, follow-up sequences
+- Finance AI (Reda): invoice processing, KPI dashboards, automated reporting
 
-Write a personalised 200-word AI audit report for the client. Structure:
-1. Warm opening using their first name and company name
-2. 2 specific insights based on their actual answers (be concrete)
-3. 2 NexOps solutions best suited to their situation with tangible benefits
-4. Clear CTA to book a free strategy call
+Write a concise personalised AI audit report. Keep it under 120 words. Structure:
+1. One short opening sentence using their first name and company name
+2. The 2 most urgent pain points you see from their answers (be specific, no fluff)
+3. Exactly 2 NexOps solutions that fit their situation — name the specialist responsible for each
+4. One short CTA sentence to book a strategy call
 
-Tone: professional, confident, opportunity-focused. Highlight GROWTH, SPEED, and COMPETITIVE EDGE — never frame AI as replacing people.`
+Rules:
+- Plain text only. No markdown. No asterisks. No bold. No bullet symbols.
+- Tone: direct, professional, opportunity-focused
+- Never mention cost-cutting or replacing people — focus on growth and speed
+- Sign off as: NexOps AI`
 
 export async function POST(req: NextRequest) {
   try {
@@ -36,8 +40,8 @@ export async function POST(req: NextRequest) {
             { role: 'system', content: SYSTEM_PROMPT },
             { role: 'user', content: `Client audit profile:\n\n${profile}\n\nGenerate the personalised report.` },
           ],
-          max_tokens: 340,
-          temperature: 0.72,
+          max_tokens: 200,
+          temperature: 0.7,
         }),
       }
     )
