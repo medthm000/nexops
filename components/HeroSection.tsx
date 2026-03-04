@@ -1,8 +1,93 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import QRCodePlaceholder from './QRCodePlaceholder'
+
+// ── Neural Network Canvas Background ─────────────────────────────
+function NeuralBackground() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    const resize = () => {
+      canvas.width  = canvas.offsetWidth
+      canvas.height = canvas.offsetHeight
+    }
+    resize()
+    window.addEventListener('resize', resize)
+
+    const N = 55
+    const pts = Array.from({ length: N }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      r: Math.random() * 2 + 1,
+      o: Math.random() * 0.45 + 0.15,
+    }))
+
+    let animId: number
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      pts.forEach(p => {
+        p.x += p.vx; p.y += p.vy
+        if (p.x < 0 || p.x > canvas.width)  p.vx *= -1
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(59,130,246,${p.o})`
+        ctx.fill()
+      })
+      for (let i = 0; i < N; i++) {
+        for (let j = i + 1; j < N; j++) {
+          const dx = pts[i].x - pts[j].x
+          const dy = pts[i].y - pts[j].y
+          const d  = Math.sqrt(dx * dx + dy * dy)
+          if (d < 130) {
+            ctx.beginPath()
+            ctx.moveTo(pts[i].x, pts[i].y)
+            ctx.lineTo(pts[j].x, pts[j].y)
+            ctx.strokeStyle = `rgba(59,130,246,${0.18 * (1 - d / 130)})`
+            ctx.lineWidth = 0.6
+            ctx.stroke()
+          }
+        }
+      }
+      animId = requestAnimationFrame(draw)
+    }
+    draw()
+    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize) }
+  }, [])
+
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-0" style={{ opacity: 0.45 }} />
+}
+
+// ── Animated count-up ────────────────────────────────────────────
+function CountUpHero({ target, suffix = '' }: { target: number; suffix?: string }) {
+  const [count, setCount] = useState(0)
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const observer = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return
+      observer.disconnect()
+      let s = 0
+      const step = target / (1000 / 16)
+      const timer = setInterval(() => {
+        s += step
+        if (s >= target) { setCount(target); clearInterval(timer) }
+        else setCount(Math.floor(s))
+      }, 16)
+    })
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [target])
+  return <div ref={ref}>{count}{suffix}</div>
+}
 
 interface HeroProps {
   onStartPresentation: () => void
@@ -15,6 +100,10 @@ export default function HeroSection({ onStartPresentation }: HeroProps) {
   const [displayed, setDisplayed] = useState('')
   const [deleting, setDeleting] = useState(false)
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const heroRef = useRef(null)
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
+  const contentY       = useTransform(scrollYProgress, [0, 1], [0, -120])
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
 
   useEffect(() => {
     const word = TYPED_WORDS[wordIdx]
@@ -32,30 +121,19 @@ export default function HeroSection({ onStartPresentation }: HeroProps) {
   }, [displayed, deleting, wordIdx])
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden aurora-bg grid-pattern">
-      {/* Aurora layers */}
+    <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden aurora-bg grid-pattern">
+      {/* Neural network animated background */}
+      <NeuralBackground />
+      {/* Soft ambient glows */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-1/4 -right-32 w-96 h-96 rounded-full blur-3xl opacity-30"
-          style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.4) 0%, transparent 70%)' }} />
-        <div className="absolute bottom-1/4 -left-32 w-80 h-80 rounded-full blur-3xl opacity-20"
-          style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.4) 0%, transparent 70%)' }} />
-        {/* Animated lines */}
-        {[...Array(4)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ duration: 1.5, delay: 0.5 + i * 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute h-px w-full origin-left"
-            style={{
-              top: `${20 + i * 20}%`,
-              background: 'linear-gradient(90deg, transparent, rgba(59,130,246,0.15), transparent)'
-            }}
-          />
-        ))}
+        <div className="absolute top-1/4 -right-32 w-96 h-96 rounded-full blur-3xl opacity-25"
+          style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.35) 0%, transparent 70%)' }} />
+        <div className="absolute bottom-1/4 -left-32 w-80 h-80 rounded-full blur-3xl opacity-15"
+          style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.35) 0%, transparent 70%)' }} />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-10 lg:pt-24 lg:pb-16">
+      <motion.div style={{ y: contentY, opacity: contentOpacity }}
+        className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-10 lg:pt-24 lg:pb-16">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left */}
           <div>
@@ -150,12 +228,14 @@ export default function HeroSection({ onStartPresentation }: HeroProps) {
               className="flex gap-8 mt-12 pt-8 border-t border-slate-200"
             >
               {[
-                { val: '4', label: 'AI Specialists' },
-                { val: '24/7', label: 'Autonomous Ops' },
-                { val: '100%', label: 'Practical AI' },
+                { val: 4,   suffix: '',   label: 'AI Specialists',  isNum: true  },
+                { val: 0,   suffix: '24/7', label: 'Autonomous Ops', isNum: false },
+                { val: 100, suffix: '%',  label: 'Practical AI',    isNum: true  },
               ].map((s) => (
                 <div key={s.label}>
-                  <div className="text-2xl font-extrabold text-slate-900" style={{ fontFamily: 'var(--font-display)' }}>{s.val}</div>
+                  <div className="text-2xl font-extrabold text-slate-900" style={{ fontFamily: 'var(--font-display)' }}>
+                    {s.isNum ? <CountUpHero target={s.val} suffix={s.suffix} /> : s.suffix}
+                  </div>
                   <div className="text-xs text-slate-500 font-medium mt-0.5" style={{ fontFamily: 'var(--font-mono)' }}>{s.label}</div>
                 </div>
               ))}
@@ -228,7 +308,7 @@ export default function HeroSection({ onStartPresentation }: HeroProps) {
             </div>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
