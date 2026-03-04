@@ -21,15 +21,27 @@ function NeuralBackground() {
     resize()
     window.addEventListener('resize', resize)
 
-    const N = 55
-    const pts = Array.from({ length: N }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: (Math.random() - 0.5) * 0.35,
-      r: Math.random() * 2 + 1,
-      o: Math.random() * 0.45 + 0.15,
-    }))
+    // Blue, indigo and violet — matches the hero gradient palette
+    const PALETTE = [
+      { r: 37,  g: 99,  b: 235 },  // blue-600
+      { r: 99,  g: 102, b: 241 },  // indigo-500
+      { r: 124, g: 58,  b: 237 },  // violet-600
+      { r: 59,  g: 130, b: 246 },  // blue-500
+    ]
+
+    const N = 75
+    const pts = Array.from({ length: N }, () => {
+      const c = PALETTE[Math.floor(Math.random() * PALETTE.length)]
+      return {
+        x:  Math.random() * canvas.width,
+        y:  Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.45,
+        vy: (Math.random() - 0.5) * 0.45,
+        r:  Math.random() * 2.5 + 1.5,
+        o:  Math.random() * 0.5 + 0.3,
+        c,
+      }
+    })
 
     let animId: number
     const draw = () => {
@@ -40,7 +52,7 @@ function NeuralBackground() {
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(59,130,246,${p.o})`
+        ctx.fillStyle = `rgba(${p.c.r},${p.c.g},${p.c.b},${p.o})`
         ctx.fill()
       })
       for (let i = 0; i < N; i++) {
@@ -48,12 +60,13 @@ function NeuralBackground() {
           const dx = pts[i].x - pts[j].x
           const dy = pts[i].y - pts[j].y
           const d  = Math.sqrt(dx * dx + dy * dy)
-          if (d < 130) {
+          if (d < 145) {
+            const alpha = 0.3 * (1 - d / 145)
             ctx.beginPath()
             ctx.moveTo(pts[i].x, pts[i].y)
             ctx.lineTo(pts[j].x, pts[j].y)
-            ctx.strokeStyle = `rgba(59,130,246,${0.18 * (1 - d / 130)})`
-            ctx.lineWidth = 0.6
+            ctx.strokeStyle = `rgba(${pts[i].c.r},${pts[i].c.g},${pts[i].c.b},${alpha})`
+            ctx.lineWidth = 0.9
             ctx.stroke()
           }
         }
@@ -64,7 +77,7 @@ function NeuralBackground() {
     return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize) }
   }, [])
 
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-0" style={{ opacity: 0.45 }} />
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-0" style={{ opacity: 0.8 }} />
 }
 
 // ── Animated count-up ────────────────────────────────────────────

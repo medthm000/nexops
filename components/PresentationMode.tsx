@@ -726,7 +726,7 @@ const slides = [
           {[
             { title: 'No Financial Visibility', desc: "Owners don't know if they are profitable or where waste is happening.", icon: '📉' },
             { title: 'Unused Data', desc: 'Sales and expense records exist, but there are no tools to understand trends.', icon: '📂' },
-            { title: 'Poor Decision-Making', desc: 'Pricing, budgets, and investments are based on guesses, not insight.', icon: '🎲' },
+            { title: 'Poor Decision-Making', desc: 'Pricing, budgets, and investments are based on guesses, not insight.', icon: '⚠️' },
           ].map((item) => (
             <div key={item.title} className="bg-red-500/5 border border-red-500/10 p-8 rounded-[40px] hover:bg-red-500/10 transition-all border-dashed">
               <div className="text-3xl mb-4">{item.icon}</div>
