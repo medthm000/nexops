@@ -775,7 +775,7 @@ const slides = [
         <div className="relative group p-1 bg-gradient-to-br from-blue-500/40 to-transparent rounded-[40px] z-10 hover:z-50 transition-all">
           <div className="bg-black rounded-[38px] overflow-visible border border-white/10 shadow-2xl">
             <img 
-              src="/images/rag2.jpg" 
+              src="/images/cfo-workflow.png" 
               alt="Agent CFO n8n Workflow" 
               className="w-full h-auto object-contain rounded-[38px] opacity-80 group-hover:opacity-100 group-hover:scale-110 group-hover:shadow-[0_40px_80px_rgba(0,0,0,0.9)] transition-all duration-700 ease-out cursor-zoom-in"
             />
