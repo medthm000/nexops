@@ -790,7 +790,7 @@ const slides = [
             <h3 className="text-blue-400 text-xs font-black uppercase tracking-[0.4em] italic mb-2">04. The Squad</h3>
             <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter">6 Specialists, One Goal.</h2>
           </div>
-          <p className="text-slate-500 text-[10px] uppercase font-bold text-right italic">Powered by GPT-4o-mini & n8n</p>
+          <p className="text-slate-500 text-[10px] uppercase font-bold text-right italic">Powered by Claude & n8n</p>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
