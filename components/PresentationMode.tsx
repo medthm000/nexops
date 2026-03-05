@@ -855,7 +855,7 @@ const slides = [
       </svg>
     ),
     content: (onExit: () => void) => (
-      <div className="flex flex-col items-center justify-center text-center space-y-10 py-10 relative">
+      <div className="w-full flex flex-col items-center justify-center text-center space-y-10 py-10 relative">
         {/* Ambient glow */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] rounded-full"
@@ -865,9 +865,9 @@ const slides = [
         {/* Logo */}
         <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.15, type: 'spring', stiffness: 140 }}
-          className="flex flex-col items-center gap-5">
-          <div className="relative">
-            <div className="w-24 h-24 bg-blue-600 rounded-3xl flex items-center justify-center"
+          className="flex flex-col items-center gap-5 w-full">
+          <div className="relative mx-auto">
+            <div className="w-24 h-24 bg-blue-600 rounded-3xl flex items-center justify-center mx-auto"
               style={{ boxShadow: '0 0 60px rgba(37,99,235,0.55), 0 8px 32px rgba(0,0,0,0.5)' }}>
               <svg width="54" height="54" viewBox="0 0 18 18" fill="none">
                 <path d="M3 9L7.5 4.5L12 9L7.5 13.5L3 9Z" fill="white" fillOpacity="0.55"/>
@@ -876,7 +876,7 @@ const slides = [
             </div>
             <div className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-blue-400 rounded-full border-2 border-black animate-pulse" />
           </div>
-          <div>
+          <div className="w-full text-center">
             <div className="text-4xl sm:text-5xl font-black text-white tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
               NexOps <span className="text-blue-400">AI</span>
             </div>
@@ -888,21 +888,20 @@ const slides = [
 
         {/* Thank you heading */}
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}
-          className="space-y-4">
+          className="w-full flex flex-col items-center space-y-4">
           <h2 className="text-5xl sm:text-6xl font-black text-white italic uppercase tracking-tighter leading-none">
             Thank{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">You</span>
           </h2>
-          <p className="text-slate-400 text-base sm:text-lg leading-relaxed max-w-md mx-auto">
-            We appreciate your time. The next step is yours —<br />
-            let&apos;s build your AI system and unlock your growth.
+          <p className="text-slate-400 text-base sm:text-lg leading-relaxed max-w-md text-center">
+            We appreciate your time. The next step is yours — let&apos;s build your AI system and unlock your growth.
           </p>
         </motion.div>
 
         {/* Website link */}
         <motion.a initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
           href="https://nexopsai.vercel.app" target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors font-medium text-sm"
+          className="inline-flex items-center justify-center gap-2 text-blue-400 hover:text-blue-300 transition-colors font-medium text-sm"
           style={{ fontFamily: 'var(--font-mono)' }}>
           🌐 nexopsai.vercel.app
         </motion.a>
@@ -910,7 +909,7 @@ const slides = [
         {/* Exit button */}
         <motion.button initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
           onClick={onExit}
-          className="group inline-flex items-center gap-3 bg-blue-600 hover:bg-blue-500 text-white font-bold px-10 py-4 rounded-2xl transition-all duration-300 hover:-translate-y-1 text-base"
+          className="group inline-flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-500 text-white font-bold px-10 py-4 rounded-2xl transition-all duration-300 hover:-translate-y-1 text-base"
           style={{ fontFamily: 'var(--font-body)', boxShadow: '0 8px 32px rgba(37,99,235,0.4)' }}>
           <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
@@ -920,14 +919,14 @@ const slides = [
 
         {/* Team credits */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
-          className="grid grid-cols-2 sm:grid-cols-4 gap-x-8 gap-y-4 pt-8 border-t border-white/5 w-full max-w-xl">
+          className="grid grid-cols-2 sm:grid-cols-4 gap-x-8 gap-y-4 pt-8 border-t border-white/5 w-full max-w-xl mx-auto">
           {[
             { name: 'Houda El Fahsi',       role: 'Marketing AI'  },
             { name: 'Soufiane Ouriaghli',   role: 'Support AI'    },
             { name: 'Ilyas Sadour',         role: 'Email AI'      },
             { name: 'Mohamed Reda Touhami', role: 'Finance AI'    },
           ].map(m => (
-            <div key={m.name}>
+            <div key={m.name} className="flex flex-col items-center text-center">
               <div className="text-white text-xs font-semibold leading-tight">{m.name}</div>
               <div className="text-blue-500 text-[10px] mt-0.5 font-medium" style={{ fontFamily: 'var(--font-mono)' }}>{m.role}</div>
             </div>
@@ -1311,7 +1310,7 @@ export default function PresentationMode({ onExit }: PresentationModeProps) {
                   <div className="text-white/50 text-xs" style={{ fontFamily: 'var(--font-mono)' }}>{slide.category}</div>
                 </div>
               </div>
-              <div className="p-4 sm:p-6 lg:p-10 max-w-3xl mx-auto">
+              <div className={`p-4 sm:p-6 lg:p-10 ${slide.number === '' ? 'w-full flex flex-col items-center' : 'max-w-3xl mx-auto'}`}>
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
                   className="flex items-center gap-2 mb-6 text-slate-700 text-xs" style={{ fontFamily: 'var(--font-mono)' }}>
                   <kbd className="px-1.5 py-0.5 bg-white/5 border border-white/10 rounded text-xs">←</kbd>
